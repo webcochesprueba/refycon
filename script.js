@@ -241,6 +241,30 @@ window.addEventListener('scroll', function() {
     }
 });
 
+// Dynamic background gradient based on scroll
+window.addEventListener('scroll', function() {
+    const scrollY = window.scrollY;
+    const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = scrollY / documentHeight;
+
+    // Morph from violet (#667eea) to teal (#20b2aa)
+    const startHue = 250; // Violet
+    const endHue = 180; // Teal
+    const currentHue = startHue + (endHue - startHue) * scrollPercent;
+
+    document.documentElement.style.setProperty('--gradient-start', `hsl(${currentHue}, 70%, 60%)`);
+    document.documentElement.style.setProperty('--gradient-end', `hsl(${currentHue + 20}, 70%, 50%)`);
+});
+
+// Cursor interaction
+document.addEventListener('mousemove', function(e) {
+    const cursorX = (e.clientX / window.innerWidth) * 100;
+    const cursorY = (e.clientY / window.innerHeight) * 100;
+
+    document.documentElement.style.setProperty('--cursor-x', `${cursorX}%`);
+    document.documentElement.style.setProperty('--cursor-y', `${cursorY}%`);
+});
+
 // Loading animation
 window.addEventListener('load', function() {
     document.body.classList.add('loaded');
