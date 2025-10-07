@@ -78,9 +78,9 @@ header.scrolled {
 }
 
 .logo-image {
-    height: 60px;
+    height: 90px;
     width: auto;
-    max-width: 150px;
+    max-width: 220px;
     object-fit: contain;
     transition: all 0.3s ease;
 }
@@ -997,11 +997,13 @@ footer {
         font-size: 16px;
         line-height: 1.5;
         padding-top: 70px;
+        overflow-x: hidden;
     }
 
     .container {
         max-width: 100%;
         padding: 0 20px;
+        box-sizing: border-box;
     }
 
     /* Header - Simplified mobile version */
@@ -1014,7 +1016,7 @@ footer {
         left: 0;
         right: 0;
         z-index: 1000;
-        padding: 10px 15px;
+        padding: 5px 10px;
     }
 
     .header-content {
@@ -1024,9 +1026,9 @@ footer {
     }
 
     .logo-image {
-        height: 60px;
+        height: 100px;
         width: auto;
-        max-width: 120px;
+        max-width: 180px;
     }
 
     /* Hide desktop nav, show mobile nav */
