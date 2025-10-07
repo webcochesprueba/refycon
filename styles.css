@@ -1617,6 +1617,11 @@ footer {
         color: #2c3e50;
     }
 
+    /* Hide phone contact item on mobile - marked with HIDDEN_PHONE_SECTION_START/END comments */
+    .phone-hidden-mobile {
+        display: none !important;
+    }
+
     .contact-form {
         background: white;
         padding: 25px 20px;
