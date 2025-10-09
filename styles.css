@@ -993,16 +993,21 @@ footer {
 /* Mobile devices - Complete redesign */
 @media (max-width: 768px) {
     /* Base mobile styles */
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        min-width: 100vw;
+        overflow-x: hidden;
+    }
+
     body {
         font-size: 16px;
         line-height: 1.5;
         padding-top: 70px;
-        overflow-x: hidden;
-        margin: 0;
         padding-left: 0;
         padding-right: 0;
-        width: 100vw;
-        min-width: 100vw;
+        overflow-x: hidden;
     }
 
     .container {
