@@ -74,11 +74,11 @@ header.scrolled {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.9rem 0;
+    padding: 0.3rem 0;
 }
 
 .logo-image {
-    height: 90px;
+    height: 110px;
     width: auto;
     max-width: 220px;
     object-fit: contain;
@@ -998,6 +998,11 @@ footer {
         line-height: 1.5;
         padding-top: 70px;
         overflow-x: hidden;
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+        width: 100vw;
+        min-width: 100vw;
     }
 
     .container {
