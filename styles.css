@@ -1635,61 +1635,71 @@ a:hover {
   z-index: var(--z-fixed);
 }
 
+.logo-minimal img {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
+  .logo-minimal img {
+    height: 70px;
+  }
+
   .container {
     padding: 0 var(--space-4);
   }
-  
+
   .hero-title-minimal {
     font-size: var(--font-size-3xl);
   }
-  
+
   .hero-subtitle-minimal {
     font-size: var(--font-size-base);
   }
-  
+
   .section-title-minimal {
     font-size: var(--font-size-2xl);
   }
-  
+
   .stats-minimal {
     grid-template-columns: 1fr;
     gap: var(--space-4);
   }
-  
+
   .services-grid-minimal {
     grid-template-columns: 1fr;
     gap: var(--space-6);
   }
-  
+
   .steelframing-benefits-minimal {
     grid-template-columns: 1fr;
   }
-  
+
   .steelframing-gallery-minimal {
     grid-template-columns: 1fr;
   }
-  
+
   .projects-grid-minimal {
     grid-template-columns: 1fr;
     gap: var(--space-6);
   }
-  
+
   .process-steps-minimal {
     grid-template-columns: 1fr;
     gap: var(--space-6);
   }
-  
+
   .contact-form-minimal {
     padding: var(--space-6);
   }
-  
+
   .footer-content-minimal {
     grid-template-columns: 1fr;
     gap: var(--space-8);
   }
-  
+
   .footer-links-minimal {
     grid-template-columns: 1fr;
   }
