@@ -1816,6 +1816,117 @@ a:hover {
   box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.3);
 }
 
+/* Language Selector */
+.language-selector-minimal {
+  position: relative;
+  margin-left: var(--space-6);
+}
+
+@media (max-width: 1024px) {
+  .language-selector-minimal {
+    margin-left: 0;
+    margin-right: var(--space-4);
+  }
+}
+
+.language-toggle-minimal {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  color: var(--gray-700);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  transition: var(--transition-normal);
+}
+
+.language-toggle-minimal:hover {
+  background: var(--gray-50);
+  border-color: var(--gray-400);
+}
+
+.language-toggle-minimal i {
+  font-size: var(--font-size-sm);
+}
+
+.language-toggle-minimal span {
+  font-weight: 600;
+  min-width: 20px;
+  text-align: center;
+}
+
+.language-dropdown-minimal {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  min-width: 150px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: var(--transition-normal);
+  z-index: 1060; /* Higher than header */
+}
+
+.language-selector-minimal:hover .language-dropdown-minimal,
+.language-selector-minimal:focus-within .language-dropdown-minimal {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.language-dropdown-minimal li {
+  list-style: none;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.language-dropdown-minimal li:last-child {
+  border-bottom: none;
+}
+
+.language-dropdown-minimal a {
+  display: block;
+  padding: var(--space-3) var(--space-4);
+  color: var(--gray-700);
+  font-size: var(--font-size-sm);
+  transition: var(--transition-fast);
+  border-radius: var(--radius-lg);
+}
+
+.language-dropdown-minimal a:hover,
+.language-dropdown-minimal a.active {
+  background: var(--primary-color);
+  color: var(--white);
+}
+
+.language-dropdown-minimal a.active {
+  background: var(--primary-color);
+  color: var(--white);
+}
+
+.flag-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-right: var(--space-2);
+}
+
+.flag-icon-small {
+  width: 16px;
+  height: 16px;
+  object-fit: cover;
+  border-radius: 1px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-right: var(--space-2);
+}
+
 /* Selection Styles */
 ::selection {
   background: rgba(44, 62, 80, 0.2);
