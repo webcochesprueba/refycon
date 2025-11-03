@@ -464,22 +464,34 @@ class FormManager {
   }
 
   async handleSubmit(event, form) {
+    console.log('Form submission started');
     event.preventDefault();
-    
-    const formId = form.id || Array.from(this.forms.keys()).find(id => 
+
+    const formId = form.id || Array.from(this.forms.keys()).find(id =>
       this.forms.get(id).element === form
     );
-    
-    if (!formId) return;
+
+    console.log('Form ID:', formId);
+
+    if (!formId) {
+      console.error('No form ID found');
+      return;
+    }
 
     const formData = this.forms.get(formId);
     const submitBtn = form.querySelector('.btn-submit-minimal');
     const statusElement = form.querySelector('.form-status-minimal');
 
+    console.log('Submit button:', submitBtn);
+    console.log('Status element:', statusElement);
+
     // Validate all fields
     const inputs = form.querySelectorAll('input, textarea, select');
+    console.log('Found inputs:', inputs.length);
     const validationResults = Array.from(inputs).map(input => this.validateField(input));
     const isFormValid = validationResults.every(result => result);
+
+    console.log('Form validation result:', isFormValid);
 
     if (!isFormValid) {
       this.showFormStatus(statusElement, 'Por favor, corrige los errores antes de enviar', 'error');
@@ -497,13 +509,15 @@ class FormManager {
         formObject[key] = value;
       });
 
-      // Simulate API call
+      console.log('Form data collected:', formObject);
+
+      // Submit form
       await this.submitForm(formObject);
-      
+
       // Success
       this.showFormStatus(statusElement, '¡Mensaje enviado correctamente! Te contactaremos pronto.', 'success');
       form.reset();
-      
+
       // Show notification
       if (window.RefyconApp) {
         window.RefyconApp.showNotification('Mensaje enviado correctamente', 'success', 3000);
@@ -512,7 +526,7 @@ class FormManager {
     } catch (error) {
       console.error('Form submission error:', error);
       this.showFormStatus(statusElement, 'Error al enviar el mensaje. Inténtalo de nuevo.', 'error');
-      
+
       // Show notification
       if (window.RefyconApp) {
         window.RefyconApp.showNotification('Error al enviar el mensaje', 'error', 3000);
@@ -543,17 +557,30 @@ class FormManager {
   }
 
   async submitForm(data) {
-    // Simulate API call
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // Simulate success/failure
-        if (Math.random() > 0.1) { // 90% success rate
-          resolve({ success: true, data });
-        } else {
-          reject(new Error('Network error'));
-        }
-      }, 2000);
-    });
+    // Create mailto link with form data
+    const subject = encodeURIComponent('Consulta desde web - Refycon');
+    const body = encodeURIComponent(
+      `Nueva consulta desde el formulario web:\n\n` +
+      `Nombre: ${data.nombre || 'No especificado'}\n` +
+      `Email: ${data.email || 'No especificado'}\n` +
+      `Teléfono: ${data.telefono || 'No especificado'}\n` +
+      `Tipo de servicio: ${data.servicio || 'No especificado'}\n\n` +
+      `Mensaje:\n${data.mensaje || 'No especificado'}\n\n` +
+      `Política de privacidad aceptada: ${data.privacidad ? 'Sí' : 'No'}`
+    );
+
+    const mailtoUrl = `mailto:refyconpro@gmail.com?subject=${subject}&body=${body}`;
+
+    // Create a temporary link element and click it for better compatibility
+    const link = document.createElement('a');
+    link.href = mailtoUrl;
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Return success immediately since mailto opens the email client
+    return { success: true, data };
   }
 }
 
@@ -1039,7 +1066,120 @@ const MinimalEffects = {
 // Initialize minimal effects
 document.addEventListener('DOMContentLoaded', function() {
   MinimalEffects.init();
+
+  // Handle Formspree form submission
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+      // Let Formspree handle the submission, but add our own validation and UX
+      handleFormspreeSubmission(e, contactForm);
+    });
+  }
 });
+
+async function handleFormspreeSubmission(event, form) {
+  event.preventDefault(); // Always prevent default to handle submission ourselves
+
+  const submitBtn = form.querySelector('.btn-submit-minimal');
+  const statusElement = form.querySelector('.form-status-minimal');
+
+  // Basic validation
+  const nombre = form.nombre?.value?.trim();
+  const email = form.email?.value?.trim();
+  const mensaje = form.mensaje?.value?.trim();
+  const privacidad = form.privacidad?.checked;
+
+  if (!nombre || !email || !mensaje || !privacidad) {
+    showFormMessage(statusElement, 'Por favor, completa todos los campos requeridos y acepta la política de privacidad.', 'error');
+    return false;
+  }
+
+  // Validate email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    showFormMessage(statusElement, 'Por favor, introduce un email válido.', 'error');
+    return false;
+  }
+
+  // Show loading state
+  setLoadingState(submitBtn, true);
+
+  // Clear any previous messages
+  if (statusElement) {
+    statusElement.style.display = 'none';
+  }
+
+  try {
+    // Submit form data using Fetch API
+    const formData = new FormData(form);
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      // Success
+      showFormMessage(statusElement, '¡Mensaje enviado correctamente! Te contactaremos pronto.', 'success');
+      form.reset();
+
+      // Show notification
+      if (window.RefyconApp) {
+        window.RefyconApp.showNotification('Mensaje enviado correctamente', 'success', 3000);
+      }
+    } else {
+      // Error
+      throw new Error('Form submission failed');
+    }
+  } catch (error) {
+    console.error('Form submission error:', error);
+    showFormMessage(statusElement, 'Error al enviar el mensaje. Inténtalo de nuevo.', 'error');
+
+    // Show notification
+    if (window.RefyconApp) {
+      window.RefyconApp.showNotification('Error al enviar el mensaje', 'error', 3000);
+    }
+  } finally {
+    // Reset loading state
+    setLoadingState(submitBtn, false);
+  }
+}
+
+function setLoadingState(button, isLoading) {
+  if (!button) return;
+
+  button.disabled = isLoading;
+
+  const textSpan = button.querySelector('.btn-text-minimal');
+  const loadingSpan = button.querySelector('.btn-loading-minimal');
+
+  if (textSpan && loadingSpan) {
+    if (isLoading) {
+      textSpan.style.display = 'none';
+      loadingSpan.style.display = 'inline-flex';
+    } else {
+      textSpan.style.display = 'inline-flex';
+      loadingSpan.style.display = 'none';
+    }
+  }
+}
+
+function showFormMessage(element, message, type) {
+  if (!element) return;
+
+  element.textContent = message;
+  element.className = `form-status-minimal ${type}`;
+  element.style.display = 'block';
+
+  // Auto hide after 5 seconds for error messages
+  if (type === 'error') {
+    setTimeout(() => {
+      element.style.display = 'none';
+    }, 5000);
+  }
+}
 
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
