@@ -861,6 +861,8 @@ class App {
     this.setupBackToTop();
     this.setupKeyboardNavigation();
     this.setupAccessibility();
+    this.prefetchHeroImage();
+    this.registerServiceWorker();
     
     // Show welcome notification
     setTimeout(() => {
@@ -870,6 +872,45 @@ class App {
         3000
       );
     }, 1000);
+  }
+
+  prefetchHeroImage() {
+    const heroImage = document.querySelector('.hero-image-minimal img');
+    if (!heroImage || !heroImage.src) return;
+
+    // Ensure intrinsic loading hints for browsers without markup support
+    heroImage.setAttribute('fetchpriority', heroImage.getAttribute('fetchpriority') || 'high');
+    heroImage.setAttribute('decoding', heroImage.getAttribute('decoding') || 'async');
+
+    if (!('relList' in document.createElement('link'))) {
+      return;
+    }
+
+    const preloadLink = document.createElement('link');
+    preloadLink.rel = 'preload';
+    preloadLink.as = 'image';
+    preloadLink.href = heroImage.currentSrc || heroImage.src;
+    if (heroImage.srcset) {
+      preloadLink.setAttribute('imagesrcset', heroImage.srcset);
+    }
+    document.head.appendChild(preloadLink);
+  }
+
+  registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) {
+      return;
+    }
+
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then((registration) => {
+          console.log('Service Worker registrado', registration.scope);
+        })
+        .catch((error) => {
+          console.error('No se pudo registrar el Service Worker:', error);
+        });
+    });
   }
 
   initializeAOS() {

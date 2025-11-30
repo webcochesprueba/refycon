@@ -201,13 +201,89 @@ refycon-website/
 - PageSpeed Insights
 - Lighthouse audits
 
+## Plan de Contenidos SEO 2025-2026
+
+| Tipo de activo | URL / Slug propuesto | Keyword principal | Objetivo | Estado |
+| --- | --- | --- | --- | --- |
+| Página de servicio | `/servicios/steel-framing-marbella` | `steel framing marbella` | Captar tráfico transaccional de lujo | Q1 2026 |
+| Página de servicio | `/servicios/reformas-integrales-estepona` | `reformas integrales estepona` | Liderar búsquedas locales de reformas | Q1 2026 |
+| Vertical urgencias | `/urgencias/fontaneria-malaga` y `/urgencias/electricidad-marbella` | `fontanero 24h malaga`, `electricista urgencias marbella` | Alta conversión móvil (Google MAP Pack) | Q2 2026 |
+| Landing sectorial | `/clientes/promotores-internacionales` | `constructor costa del sol promotores` | Potenciar alianzas B2B | Q2 2026 |
+| Casos de éxito | `/casos/villa-sotogrande-steel-framing` | `steel framing sotogrande` | Autoridad + enlaces | Q2 2026 |
+| FAQ estructurado | `/faq/licencias-construccion-costa-del-sol` | `licencia obra costa del sol` | Rich snippets + captación top funnel | Q3 2026 |
+| Blog / Guía | `/blog/guia-materiales-premium-2026` | `materiales construccion premium costa del sol` | Topical authority | Q3 2026 |
+| Testimonios verificables | `/opiniones-clientes` | `opiniones refycon` | Respaldar schema `Review` real | Continuo |
+
+### Backlog de acciones
+- **Estructurar clústeres de contenido**: cada página de servicio enlaza con 2-3 artículos de soporte (FAQs, comparativas de materiales, checklists).  
+- **Incorporar datos reales**: fotos, métricas (m², plazo, presupuesto) y testimonios firmados para cada caso de éxito.  
+- **Localizar para cada idioma**: replicar las páginas prioritarias en EN/FR/DE siguiendo el mismo slug internacional (`/en/services/steel-framing-marbella`).  
+- **Actualizar schema**: añadir `FAQPage`, `HowTo` y `Review` donde corresponda; usar `Service` específico por ciudad para reforzar relevancia local.  
+- **Medir impacto**: trackear con GA4 + Search Console los clics/impressions de cada nueva URL y ajustar interlinking trimestralmente.  
+
 ## Contacto
 
 **Refycon - Constructora Premium**
-- 📧 Email: info@refycon.com
+- 📧 Email: refyconpro@gmail.com
+- 📞 Teléfono: +34 613 446 457
 - 📍 Ubicación: Costa del Sol, Málaga, España
 - 🕒 Horario: Lun-Vie: 8:00-18:00, Sáb: 9:00-14:00
 - 🆘 Urgencias: 24/7
+
+---
+
+## 📊 Google Analytics 4 Setup
+
+### Paso 1: Crear propiedad GA4
+1. Ve a [analytics.google.com](https://analytics.google.com)
+2. Crea una nueva propiedad GA4
+3. Copia el Measurement ID (formato: `G-XXXXXXXXXX`)
+
+### Paso 2: Configurar en el sitio
+En cada archivo HTML, busca el código GA comentado y reemplaza `GA_MEASUREMENT_ID`:
+
+```html
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TU_ID_AQUI"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TU_ID_AQUI');
+</script>
+```
+
+### Paso 3: Verificar instalación
+- Usa la extensión "Google Analytics Debugger" para Chrome
+- Verifica en GA4 > Tiempo real que registra visitas
+
+### Eventos recomendados para tracking
+- `form_submit` - Envío de formularios de contacto
+- `click_phone` - Clics en número de teléfono
+- `click_whatsapp` - Clics en botón WhatsApp
+- `scroll_depth` - Profundidad de scroll (25%, 50%, 75%, 100%)
+
+---
+
+## 🖼️ Optimización de Imágenes
+
+### Herramientas recomendadas para WebP
+1. **Online**: [squoosh.app](https://squoosh.app) - Gratuito, sin instalación
+2. **CLI**: `cwebp` de Google
+   ```bash
+   cwebp imagen.jpg -o imagen.webp -q 80
+   ```
+3. **Bulk**: [imagemagick](https://imagemagick.org)
+   ```bash
+   mogrify -format webp -quality 80 *.jpg
+   ```
+
+### Tamaños recomendados
+- Hero images: 1920x1080px (WebP ~100KB)
+- Gallery: 800x600px (WebP ~40KB)
+- Thumbnails: 400x300px (WebP ~20KB)
+
+---
 
 ## Licencia
 
